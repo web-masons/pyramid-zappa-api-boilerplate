@@ -1,3 +1,10 @@
+# Customized gitignore content
+.idea/
+.aws
+
+
+# --- STANDARD GITHUB PYTHON .gitignore ---
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
