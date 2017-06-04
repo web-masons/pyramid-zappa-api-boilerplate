@@ -2,7 +2,7 @@
 
 # script/bootstrap: Resolve all dependencies that the application requires to run.
 
-set -ex
+set -e
 
 cd "$(dirname "$0")/.."
 
@@ -28,11 +28,11 @@ then
     exit 2
 fi
 
-inventory=ansible/inventory/${environment}.ini
-if [ ! -e ${inventory} ]
+inventory=inventory/${environment}.ini
+if [ ! -e ansible/${inventory} ]
 then
     echo "Error in $(dirname "$0")/bootstrap:"
-    echo "  Inventory File ${inventory} does not exist, please check to make sure you're using the correct environment!"
+    echo "  Inventory File ansible/${inventory} does not exist, please check to make sure you're using the correct environment!"
     exit 3
 fi
 
@@ -41,35 +41,30 @@ echo "Ansible Provisioning for environment:" ${environment}
 # This is hopefully a TEMPORARY section. I want to pre-bake a lot of this provisioning work into the actual box
 # we're using and not into the project itself.
 # <TemporaryProvisioning>
+echo "Provsioning the Server:"
+export DEBIAN_FRONTEND=noninteractive
+
+echo "  1/5. Update apt"
+apt-get -qq update
+
+echo "  2/5. Upgrading all packages"
+apt-get -qq -y dist-upgrade
+
 if [ $(dpkg-query -W -f='${Status}' ansible 2>/dev/null | grep -c "ok installed") -eq 0 ];
 then
-    echo "Provsioning the Server:"
-    export DEBIAN_FRONTEND=noninteractive
+    echo "  3/5. Add Ansible PPA"
+    apt-add-repository ppa:ansible/ansible
 
-    echo "  1/7. Update apt"
-    apt-get update -qq &> /dev/null || exit 1
-
-    echo "  2/7. Install python-software-properties python-apt python-pycurl"
-    apt-get install -qq software-properties-common python-apt python-pycurl &> /dev/null || exit 1
-
-    echo "  3/7. Add Ansible PPA"
-    apt-add-repository ppa:ansible/ansible &> /dev/null || exit 1
-
-    echo "  4/7. Update apt to grab new PPA info for Ansible"
-    apt-get update -qq &> /dev/null || exit 1
-
-    echo "  5/7. Install Ansible"
-    apt-get install -qq ansible &> /dev/null || exit 1
-
-    echo "  6/7. Remove auto-installed packages that are no longer required"
-    apt-get -y autoremove &> /dev/null || exit 1
-
-    echo "  7/7. Upgrading all packages"
-    apt-get -y dist-upgrade &> /dev/null || exit 1
+    echo "  4/5. Install python2 and ansible"
+    apt-get -qq -y install python python-dev python-pip ansible ntp
 else
-    apt-get update -qq &> /dev/null || exit 1
-    apt-get install -qq ansible &> /dev/null || exit 1
+    echo "  3/5. Add Ansible PPA (Skipped, already installed)"
+    echo "  4/5. Install python2 and ansible (Skipped, already installed)"
 fi
+
+echo "  5/5. Remove auto-installed packages that are no longer required"
+apt-get -qq -y autoremove
+
 # </TemporaryProvisioning>
 
 cd ansible

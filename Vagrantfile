@@ -4,23 +4,9 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-# README!
-#
-# IF you have cloned the bootstrap for your project, you will want to search/replace the following
-# values for your new project.
-#
-# The name of the configuration node:
-#   pyzappi-boilerplate
-#
-# The hostname of your Vagrant Box:
-#   pyzappi
-#
-# The IP Address that Vagrant will put itself at for use with vagrant-hostmanager. You'll want to change these
-# so that you don't end up with ip address space collisions on your local machine.
-#   192.168.33.50
-#
-# The URL that vagrant-hostmanager will put in your hosts file for you:
-#   pyzappi.web-masons.org
+# UPDATE THESE FOR YOUR PROJECT
+project_name = "pyzappi"
+hosts_aliases = %w(pyzappi.localdomain "pyzappi.web-masons.org")
 
 
 # All Vagrant configuration is done below. The "2" in Vagrant.configure
@@ -42,10 +28,10 @@ Vagrant.configure(2) do |config|
   config.hostmanager.ignore_private_ip = false
   config.hostmanager.include_offline = true
 
-  config.vm.define 'pyzappi-boilerplate' do |node|
-      node.vm.hostname = 'pyzappi'
-      node.vm.network :private_network, ip: '192.168.33.41'
-      node.hostmanager.aliases = %w(pyzappi.localdomain pyzappi.web-masons.org)
+  config.vm.define "#{project_name}" do |node|
+      node.vm.hostname = "#{project_name}#{rand(01..99)}"
+      node.vm.network :private_network, type: "dhcp"
+      node.hostmanager.aliases = hosts_aliases
   end
 
   # Forward SSH keys to the Guest VM
@@ -56,10 +42,6 @@ Vagrant.configure(2) do |config|
   # accessing "localhost:8080" will access port 80 on the guest machine.
   # config.vm.network "forwarded_port", guest: 80, host: 8080
 
-  # Create a private network, which allows host-only access to the machine
-  # using a specific IP.
-  # config.vm.network "private_network", ip: "192.168.33.41", hostname: "pyzappi"
-
   # Share an additional folder to the guest VM. The first argument is
   # the path on the host to the actual folder. The second argument is
   # the path on the guest to mount the folder. And the optional third
@@ -67,6 +49,10 @@ Vagrant.configure(2) do |config|
   config.vm.synced_folder ".", "/vagrant",
     :nfs => true,
     :mount_options => ['nolock,vers=3,udp,noatime,actimeo=1']
+
+  config.vm.provider "virtualbox" do |vb|
+      vb.customize [ "guestproperty", "set", :id, "/VirtualBox/GuestAdd/VBoxService/--timesync-set-threshold", 1000 ]
+  end
 
   # Define a Vagrant Push strategy for pushing to Atlas. Other push strategies
   # such as FTP and Heroku are also available. See the documentation at
