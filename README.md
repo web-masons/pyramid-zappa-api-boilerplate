@@ -1,6 +1,8 @@
 # pyramid-zappa-api-boilerplate
 A Python boilerplate for creating AWS Lambda API projects using Pyramid and Zappa, orchestrated with Ansible.
 
+Before participating in our communit, please read and agree to our [Code of Conduct](.github/CODE_OF_CONDUCT.md).
+
 ## Overview
 We're all working quite a bit with Python and AWS Lambda. In order to create our countless APIs, ETL scripts, Chat Bots,
 etc. we want a boilerplate project that we can share. The hope is that we can share this project amongst ourselves to
