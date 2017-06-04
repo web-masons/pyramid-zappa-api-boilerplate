@@ -5,7 +5,7 @@ A Python boilerplate for creating AWS Lambda API projects using Pyramid and Zapp
 Before participating in our community, please read through and make sure you fundamentally agree with our various
 policies and guides. If you have any questions or concerns, please feel free to let us know.
  * [Code of Conduct](.github/CODE_OF_CONDUCT.md)
- * [Contributing Guideliens](.github/CONTRIBUTING.md).
+ * [Contributing Guidelines](.github/CONTRIBUTING.md).
  * [License](LICENSE).
 
 ## Overview
