@@ -3,7 +3,6 @@
 - hosts: all
   connection: local
   gather_facts: yes
-  become: yes
   become_method: sudo
 
   roles:

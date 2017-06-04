@@ -45,25 +45,25 @@ echo "Provsioning the Server:"
 export DEBIAN_FRONTEND=noninteractive
 
 echo "  1/5. Update apt"
-apt-get -qq update
-
-echo "  2/5. Upgrading all packages"
-apt-get -qq -y dist-upgrade
+apt-get -y update
 
 if [ $(dpkg-query -W -f='${Status}' ansible 2>/dev/null | grep -c "ok installed") -eq 0 ];
 then
-    echo "  3/5. Add Ansible PPA"
+    echo "  2/5. Add Ansible PPA"
     apt-add-repository ppa:ansible/ansible
 
-    echo "  4/5. Install python2 and ansible"
-    apt-get -qq -y install python python-dev python-pip ansible ntp
+    echo "  3/5. Install python2 and ansible"
+    apt-get -y install python python-dev python-pip ansible ntp
 else
-    echo "  3/5. Add Ansible PPA (Skipped, already installed)"
-    echo "  4/5. Install python2 and ansible (Skipped, already installed)"
+    echo "  2/5. Add Ansible PPA (Skipped, already installed)"
+    echo "  3/5. Install python2 and ansible (Skipped, already installed)"
 fi
 
+echo "  4/5. Upgrading all packages"
+apt-get -y dist-upgrade
+
 echo "  5/5. Remove auto-installed packages that are no longer required"
-apt-get -qq -y autoremove
+apt-get -y autoremove
 
 # </TemporaryProvisioning>
 
