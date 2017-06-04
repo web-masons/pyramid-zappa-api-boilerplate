@@ -44,7 +44,7 @@ Vagrant.configure(2) do |config|
 
   config.vm.define 'pyzappi-boilerplate' do |node|
       node.vm.hostname = 'pyzappi'
-      node.vm.network :private_network, ip: '192.168.33.50'
+      node.vm.network :private_network, ip: '192.168.33.41'
       node.hostmanager.aliases = %w(pyzappi.localdomain pyzappi.web-masons.org)
   end
 
@@ -58,7 +58,7 @@ Vagrant.configure(2) do |config|
 
   # Create a private network, which allows host-only access to the machine
   # using a specific IP.
-  # config.vm.network "private_network", ip: "192.168.33.50", hostname: "pyzappi"
+  # config.vm.network "private_network", ip: "192.168.33.41", hostname: "pyzappi"
 
   # Share an additional folder to the guest VM. The first argument is
   # the path on the host to the actual folder. The second argument is
@@ -83,6 +83,6 @@ Vagrant.configure(2) do |config|
   config.vm.provision "shell",
       :privileged => true,
       :keep_color => true,
-      :inline => "/vagrant/script/bootstrap"
+      :inline => "/vagrant/script/bootstrap vagrant"
 
 end

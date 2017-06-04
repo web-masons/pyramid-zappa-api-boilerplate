@@ -2,6 +2,85 @@
 
 # script/bootstrap: Resolve all dependencies that the application requires to run.
 
-set -e
+set -ex
 
 cd "$(dirname "$0")/.."
+
+export PYTHONUNBUFFERED=1
+export ANSIBLE_FORCE_COLOR=1
+
+script_self=$(dirname "$0")/bootstrap
+environment=$1
+
+if [ -z ${environment} ]
+then
+    echo "Error in ${script_self}:"
+    echo "  Parameter required: environment"
+    echo "  Example: ${script_self} vagrant"
+    exit 1
+fi
+
+playbook=${environment}.yml
+if [ ! -e ansible/${playbook} ]
+then
+    echo "Error in $(dirname "$0")/bootstrap:"
+    echo "  Playbook ansible/${playbook} does not exist, please check to make sure you're using the correct environment!"
+    exit 2
+fi
+
+inventory=ansible/inventory/${environment}.ini
+if [ ! -e ${inventory} ]
+then
+    echo "Error in $(dirname "$0")/bootstrap:"
+    echo "  Inventory File ${inventory} does not exist, please check to make sure you're using the correct environment!"
+    exit 3
+fi
+
+echo "Ansible Provisioning for environment:" ${environment}
+
+# This is hopefully a TEMPORARY section. I want to pre-bake a lot of this provisioning work into the actual box
+# we're using and not into the project itself.
+# <TemporaryProvisioning>
+if [ $(dpkg-query -W -f='${Status}' ansible 2>/dev/null | grep -c "ok installed") -eq 0 ];
+then
+    echo "Provsioning the Server:"
+    export DEBIAN_FRONTEND=noninteractive
+
+    echo "  1/7. Update apt"
+    apt-get update -qq &> /dev/null || exit 1
+
+    echo "  2/7. Install python-software-properties python-apt python-pycurl"
+    apt-get install -qq software-properties-common python-apt python-pycurl &> /dev/null || exit 1
+
+    echo "  3/7. Add Ansible PPA"
+    apt-add-repository ppa:ansible/ansible &> /dev/null || exit 1
+
+    echo "  4/7. Update apt to grab new PPA info for Ansible"
+    apt-get update -qq &> /dev/null || exit 1
+
+    echo "  5/7. Install Ansible"
+    apt-get install -qq ansible &> /dev/null || exit 1
+
+    echo "  6/7. Remove auto-installed packages that are no longer required"
+    apt-get -y autoremove &> /dev/null || exit 1
+
+    echo "  7/7. Upgrading all packages"
+    apt-get -y dist-upgrade &> /dev/null || exit 1
+else
+    apt-get update -qq &> /dev/null || exit 1
+    apt-get install -qq ansible &> /dev/null || exit 1
+fi
+# </TemporaryProvisioning>
+
+cd ansible
+
+echo "  Application Bootstrap 1/2. Install Ansible Galaxy role requirements from requirements.yml"
+if [ -s requirements.yml ]
+then
+    ansible-galaxy install -r requirements.yml --force
+fi
+
+echo "  Application Bootstrap 2/2. Ansible (allthethings)..."
+ansible-playbook ${playbook} --inventory-file=${inventory} --connection=local
+
+echo "Bootstrap Complete"
