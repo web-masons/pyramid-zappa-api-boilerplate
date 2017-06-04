@@ -1,6 +1,7 @@
 # Customized gitignore content
 .idea/
 .aws``
+.vagrant/
 
 
 # --- STANDARD GITHUB PYTHON .gitignore ---
