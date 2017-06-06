@@ -5,3 +5,77 @@
 set -e
 
 cd "$(dirname "$0")/.."
+
+export PYTHONUNBUFFERED=1
+export ANSIBLE_FORCE_COLOR=1
+
+script_self=$(dirname "$0")/bootstrap
+environment=$1
+
+if [ -z ${environment} ]
+then
+    echo "Error in ${script_self}:"
+    echo "  Parameter required: environment"
+    echo "  Example: ${script_self} vagrant"
+    exit 1
+fi
+
+playbook=${environment}.yml
+if [ ! -e ansible/${playbook} ]
+then
+    echo "Error in $(dirname "$0")/bootstrap:"
+    echo "  Playbook ansible/${playbook} does not exist, please check to make sure you're using the correct environment!"
+    exit 2
+fi
+
+inventory=inventory/${environment}.ini
+if [ ! -e ansible/${inventory} ]
+then
+    echo "Error in $(dirname "$0")/bootstrap:"
+    echo "  Inventory File ansible/${inventory} does not exist, please check to make sure you're using the correct environment!"
+    exit 3
+fi
+
+echo "Ansible Provisioning for environment:" ${environment}
+
+# This is hopefully a TEMPORARY section. I want to pre-bake a lot of this provisioning work into the actual box
+# we're using and not into the project itself.
+# <TemporaryProvisioning>
+echo "Provsioning the Server:"
+export DEBIAN_FRONTEND=noninteractive
+
+echo "  1/5. Update apt"
+apt-get -y update
+
+if [ $(dpkg-query -W -f='${Status}' ansible 2>/dev/null | grep -c "ok installed") -eq 0 ];
+then
+    echo "  2/5. Add Ansible PPA"
+    apt-add-repository ppa:ansible/ansible
+
+    echo "  3/5. Install python2 and ansible"
+    apt-get -y install python python-dev python-pip ansible ntp
+else
+    echo "  2/5. Add Ansible PPA (Skipped, already installed)"
+    echo "  3/5. Install python2 and ansible (Skipped, already installed)"
+fi
+
+echo "  4/5. Upgrading all packages"
+apt-get -y dist-upgrade
+
+echo "  5/5. Remove auto-installed packages that are no longer required"
+apt-get -y autoremove
+
+# </TemporaryProvisioning>
+
+cd ansible
+
+echo "  Application Bootstrap 1/2. Install Ansible Galaxy role requirements from requirements.yml"
+if [ -s requirements.yml ]
+then
+    ansible-galaxy install -r requirements.yml --force
+fi
+
+echo "  Application Bootstrap 2/2. Ansible (allthethings)..."
+ansible-playbook ${playbook} --inventory-file=${inventory} --connection=local
+
+echo "Bootstrap Complete"

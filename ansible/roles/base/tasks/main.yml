@@ -1,0 +1,18 @@
+
+---
+
+    - name: Update apt cache
+      apt: update-cache=yes cache_valid_time=86400
+      become: yes
+
+    - name: Check NTP service to make sure its running
+      service: name=ntp state=started enabled=yes
+      become: yes
+
+    - name: Install AWS CLI package via Pip
+      pip: name=awscli
+      become: yes
+
+    - name: Install Boto Python package via Pip
+      pip: name=boto
+      become: yes

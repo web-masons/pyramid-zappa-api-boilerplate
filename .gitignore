@@ -1,6 +1,8 @@
 # Customized gitignore content
 .idea/
 .aws``
+.vagrant/
+ansible/vagrant.retry
 
 
 # --- STANDARD GITHUB PYTHON .gitignore ---
