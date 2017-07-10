@@ -78,4 +78,11 @@ fi
 echo "  Application Bootstrap 2/2. Ansible (allthethings)..."
 ansible-playbook ${playbook} --inventory-file=${inventory} --connection=local
 
+echo " Install MySQL 5.7 "
+sudo apt-get install mysql-server-5.7
+sudo apt-get install python-mysqldb
+
+echo " Install Virtuel Enviroment"
+sudo pip install virtualenv virtualenvwrapper
+
 echo "Bootstrap Complete"
