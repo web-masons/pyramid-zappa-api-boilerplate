@@ -5,8 +5,8 @@
 # vi: set ft=ruby :
 
 # UPDATE THESE FOR YOUR PROJECT
-project_name = "warcry"
-hosts_aliases = %w(warcry.localdomain "warcry.web-masons.org")
+project_name = "pyzappi"
+hosts_aliases = %w(pyzappi.localdomain "pyzappi.web-masons.org")
 
 
 # All Vagrant configuration is done below. The "2" in Vagrant.configure
@@ -47,12 +47,12 @@ Vagrant.configure(2) do |config|
   # the path on the host to the actual folder. The second argument is
   # the path on the guest to mount the folder. And the optional third
   # argument is a set of non-required options.
-  config.vm.synced_folder ".", "/home/nico/",
+  config.vm.synced_folder ".", "/vagrant/",
     :nfs => true,
     :mount_options => ['nolock,vers=3,udp,noatime,actimeo=1']
 
   config.vm.provider "virtualbox" do |vb|
-      vb.customize [ "guestproperty", "set", :id, "/VirtualBox/GuestAdd/VBoxService/--timesync-set-threshold", 2000 ]
+      vb.customize [ "guestproperty", "set", :id, "/VirtualBox/GuestAdd/VBoxService/--timesync-set-threshold", 1000 ]
 
   end
 
