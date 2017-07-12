@@ -78,4 +78,10 @@ fi
 echo "  Application Bootstrap 2/2. Ansible (allthethings)..."
 ansible-playbook ${playbook} --inventory-file=${inventory} --connection=local
 
+echo " Install Marshmallow "
+sudo pip install -U marshmallow-sqlalchemy
+
+echo " Install Virtuel Enviroment"
+sudo pip install virtualenv virtualenvwrapper
+
 echo "Bootstrap Complete"
