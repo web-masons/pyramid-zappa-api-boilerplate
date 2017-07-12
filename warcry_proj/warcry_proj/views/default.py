@@ -133,6 +133,7 @@ def delete_user(request):
         msg = "The User with id '{}' was not found.".format(user_id)
         return Response(status=404, json_body={'error': msg})
     else :
-        DBSession.delete(user)
-        return HTTPOk()
+        with transaction.manager:
+          DBSession.delete(user)
+          return HTTPOk()
 
