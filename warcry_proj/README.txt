@@ -17,12 +17,6 @@ Getting Started
 - Create the project scaffold in pyramid
 *pcreate -s battleCry warcry_proj
 *python setup.py develop
-initialize_warcry_proj_db development.ini
-pserve development.ini
-
-
-
-
-
-- $VENV/bin/pip install -e .
+*initialize_warcry_proj_db development.ini
+*pserve development.ini
 
