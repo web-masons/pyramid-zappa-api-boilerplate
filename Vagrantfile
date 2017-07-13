@@ -31,7 +31,6 @@ Vagrant.configure(2) do |config|
   config.vm.define "#{project_name}" do |node|
       node.vm.hostname = "#{project_name}#{rand(01..99)}"
       node.vm.network :private_network, type: "dhcp"
-      #node.vm.network :private_network, :ip => '10.10.10.10', :auto_network => true
       node.hostmanager.aliases = hosts_aliases
   end
 
