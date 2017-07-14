@@ -1,0 +1,11 @@
+echo " Install Marshmallow "
+sudo pip install -U marshmallow-sqlalchemy
+
+echo " Install Virtuel Enviroment"
+sudo pip install virtualenv virtualenvwrapper
+
+echo " Install boto3 "
+sudo pip install boto3
+
+echo " Install Pyramid "
+sudo pip install pyramid
