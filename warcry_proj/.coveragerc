@@ -1,0 +1,3 @@
+[run]
+source = warcry_proj
+omit = warcry_proj/test*

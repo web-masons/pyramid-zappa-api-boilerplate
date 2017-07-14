@@ -46,12 +46,13 @@ Vagrant.configure(2) do |config|
   # the path on the host to the actual folder. The second argument is
   # the path on the guest to mount the folder. And the optional third
   # argument is a set of non-required options.
-  config.vm.synced_folder ".", "/vagrant",
+  config.vm.synced_folder ".", "/vagrant/",
     :nfs => true,
     :mount_options => ['nolock,vers=3,udp,noatime,actimeo=1']
 
   config.vm.provider "virtualbox" do |vb|
       vb.customize [ "guestproperty", "set", :id, "/VirtualBox/GuestAdd/VBoxService/--timesync-set-threshold", 1000 ]
+
   end
 
   # Define a Vagrant Push strategy for pushing to Atlas. Other push strategies

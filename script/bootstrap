@@ -75,6 +75,12 @@ then
     ansible-galaxy install -r requirements.yml --force
 fi
 
+echo " Install all project dependant packages "
+if [ -s project.yml ]
+then
+    ansible-galaxy install -r project.yml --force
+fi
+
 echo "  Application Bootstrap 2/2. Ansible (allthethings)..."
 ansible-playbook ${playbook} --inventory-file=${inventory} --connection=local
 

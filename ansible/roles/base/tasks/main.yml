@@ -16,3 +16,12 @@
     - name: Install Boto Python package via Pip
       pip: name=boto
       become: yes
+
+    - name: Install Marshmallow via Pip
+      pip: name=marshmallow-sqlalchemy
+      become: yes
+
+    - name: Install Virtual Enviroment via Pip
+      pip: name=virtualenv
+      become: yes
+
