@@ -23,6 +23,20 @@ if [ -n "$1" ]; then
 else
   # no argument provided, so just run the local console in the development
   # environment. Ensure the application is up to date first.
-  script/update.sh
-    echo "local console not yet implemented"
+  # script/update.sh
+
+  echo "To run a local console, please execute the following command:"
+  echo "    source ~/python3.6/bin/activate"
 fi
+
+
+
+
+
+
+
+
+
+
+
+Can I just Python-ify this script to do what I want instead of a Shell Script????

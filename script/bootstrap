@@ -69,10 +69,10 @@ apt-get -y autoremove
 
 cd ansible
 
-echo "  Application Bootstrap 1/2. Install Ansible Galaxy role requirements from requirements.yml"
-if [ -s requirements.yml ]
+echo "  Application Bootstrap 1/2. Install Ansible Galaxy role requirements from galaxy-requirements.yml"
+if [ -s galaxy-requirements.yml ]
 then
-    ansible-galaxy install -r requirements.yml --force
+    ansible-galaxy install -r galaxy-requirements.yml --force
 fi
 
 echo "  Application Bootstrap 2/2. Ansible (allthethings)..."
