@@ -33,9 +33,3 @@
         requirements: /vagrant/ansible/pip-requirements.txt
         virtualenv: /home/vagrant/python3.6
         virtualenv_python: python3.6
-
-#    - name: Manually create the initial virtualenv
-#      command: virtualenv /home/vagrant/python3.5 -p python3.5 creates="/home/vagrant/python3.5"
-#
-#    - name: Manually install requirements
-#      command: /home/vagrant/python3.5/bin/pip install -r /vagrant/inf/pip/requirements.txt
