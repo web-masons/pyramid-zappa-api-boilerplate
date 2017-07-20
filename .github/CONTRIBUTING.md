@@ -38,14 +38,14 @@ machine, but I'm not 100% sure. I've never seen this error before except on my n
 * Vagrant Up
 * Activate Python 3.6 (see below)
 
-### Python 3.5
-We're going to attempt to use Python 3.5 for our app. We are using
+### Python 3.6
+We're going to attempt to use Python 3.6 for our app. We are using
 virutalenv to manage our Python environment. In order to activate the
-Python3.5 environment, you must execute the following when you enter
+Python3.6 environment, you must execute the following when you enter
 your Vagrant shell.
 
 ```bash
-$ source /home/vagrant/python3.5/bin/activate
+$ source /home/vagrant/python3.6/bin/activate
 ```
 
 ## The Basics
