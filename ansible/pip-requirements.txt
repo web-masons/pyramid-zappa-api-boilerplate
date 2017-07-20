@@ -3,3 +3,4 @@ awscli
 requests
 pytz
 iso8601
+PyMySQL
