@@ -22,6 +22,32 @@ hosts file if you are dealing with web applications and Vagrant.
 $ vagrant plugin install vagrant-hostmanager
 ```
 
+### NOTE
+If you get the following error the first time you ```vagrant up```...
+```bash
+No guest IP was given to the Vagrant core NFS helper. This is an
+internal error that should be reported as a bug.
+```
+To resolve: ```vagrant halt``` and then ```vagrant up``` again. I'm not sure why it
+works like that, but well, it's a workaround. I think it's only a problem on a new
+machine, but I'm not 100% sure. I've never seen this error before except on my new machine.
+
+## Usage
+* Fork the project
+* Clone your Fork
+* Vagrant Up
+* Activate Python 3.6 (see below)
+
+### Python 3.5
+We're going to attempt to use Python 3.5 for our app. We are using
+virutalenv to manage our Python environment. In order to activate the
+Python3.5 environment, you must execute the following when you enter
+your Vagrant shell.
+
+```bash
+$ source /home/vagrant/python3.5/bin/activate
+```
+
 ## The Basics
 This project uses the "GitHub" branching model. If you'd like to read more on
 some of the various branching models, the two big Elephpants in the room are
