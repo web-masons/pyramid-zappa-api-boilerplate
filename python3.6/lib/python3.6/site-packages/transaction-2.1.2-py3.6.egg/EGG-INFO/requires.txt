@@ -1,0 +1,13 @@
+zope.interface
+
+[docs]
+Sphinx
+repoze.sphinx.autointerface
+
+[test]
+mock
+
+[testing]
+nose
+coverage
+mock

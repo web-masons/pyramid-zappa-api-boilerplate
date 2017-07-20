@@ -1,0 +1,9 @@
+setuptools
+
+[docs]
+Sphinx
+pylons-sphinx-themes
+
+[testing]
+pytest
+pytest-cov

@@ -1,0 +1,6 @@
+PasteDeploy>=1.5.0
+plaster>=0.5
+
+[testing]
+pytest
+pytest-cov

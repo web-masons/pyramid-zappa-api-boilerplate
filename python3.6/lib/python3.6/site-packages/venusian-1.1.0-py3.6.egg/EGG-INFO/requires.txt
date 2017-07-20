@@ -1,0 +1,9 @@
+
+[docs]
+Sphinx
+repoze.sphinx.autointerface
+
+[testing]
+pytest
+coverage
+pytest-cov

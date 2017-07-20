@@ -34,5 +34,5 @@
       become_method: sudo -H
       pip:
         requirements: /vagrant/ansible/pip-requirements.txt
-        virtualenv: /home/vagrant/python3.6
+        virtualenv: /vagrant/python3.6
         virtualenv_python: python3.6
