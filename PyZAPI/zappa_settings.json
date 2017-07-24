@@ -1,0 +1,9 @@
+{
+    "default": {
+        "app_function": "pyzapi.app.zappa_dev",
+        "aws_region": "us-east-1",
+        "profile_name": "default",
+        "s3_bucket": "zappa-0oqiolisl",
+        "runtime": "python3.6"
+    }
+}
