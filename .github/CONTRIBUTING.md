@@ -63,9 +63,7 @@ $ aws configure
 ### Pyramid / Zappa Setup
 In order to have a working pyramid / zappa project we would need to install the frameworks
 
-```bash
-$ pip3 install pyramid
-$ pip3 install zappa
+run the pip-virtualenv-requirements.txt via ansible
 ```
 
 create a project scaffold
