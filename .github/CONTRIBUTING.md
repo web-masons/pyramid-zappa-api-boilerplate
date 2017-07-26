@@ -37,6 +37,8 @@ machine, but I'm not 100% sure. I've never seen this error before except on my n
 * Clone your Fork
 * Vagrant Up
 * Activate Python 3.6 (see below)
+* Setup AWS Account
+* Install/Setup Pyramid and Zappa
 
 ### Python 3.6
 We're going to attempt to use Python 3.6 for our app. We are using
@@ -46,6 +48,63 @@ your Vagrant shell.
 
 ```bash
 $ source /home/vagrant/python3.6/bin/activate
+```
+
+### AWS MySQL/Zappa Credentials
+We're going to be using a AWS account for MySQL aswell as Zappa.
+In order to create a MySQL Instance a AWS Account is required.
+Once a AWS Account has been created a User needs to be setup in the IAM Console, use the keys provided
+to configure the aws connection in vagrant
+
+```bash
+$ aws configure
+```
+
+### Pyramid / Zappa Setup
+In order to have a working pyramid / zappa project we would need to install the frameworks
+
+```bash
+$ pip3 install pyramid
+$ pip3 install zappa
+```
+
+create a project scaffold
+```bash
+$ pcreate -s alchemy PyZAPI
+$ cd PyZAPI
+```
+
+Setup your pyramid
+```bash
+$ python3 setup.py develop Or pip install -e .
+```
+
+Setup Zappa
+```bash
+$ zappa init
+```
+Make sure to set the runtime to python3.6
+"runtime": "python3.6"
+
+Update the ini files with your database credentials
+```bash
+$ vi development.ini / production.ini
+edit the sqlalchemy.url with your database connection details
+```
+
+Setup your Database
+```bash
+$ initialize_PyZAPI_db development.ini
+```
+deploy your zappa enviroment
+```bash
+$ zappa deploy
+$ zappa update (if enviroment exists)
+```
+
+Start pyramid (if required)
+```bash
+$ pserve development.ini --reload
 ```
 
 ## The Basics

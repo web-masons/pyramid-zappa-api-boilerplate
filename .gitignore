@@ -2,7 +2,7 @@
 .idea/
 .aws``
 .vagrant/
-ansible/vagrant.retry
+vagrant.retry
 
 # --- STANDARD GITHUB PYTHON .gitignore ---
 
