@@ -2,8 +2,7 @@
 .idea/
 .aws``
 .vagrant/
-ansible/vagrant.retry
-
+vagrant.retry
 
 # --- STANDARD GITHUB PYTHON .gitignore ---
 
@@ -11,6 +10,7 @@ ansible/vagrant.retry
 __pycache__/
 *.py[cod]
 *$py.class
+*.pyc
 
 # C extensions
 *.so
