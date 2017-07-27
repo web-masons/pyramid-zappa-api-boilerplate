@@ -3,6 +3,7 @@
 .aws``
 .vagrant/
 vagrant.retry
+*.ini
 
 # --- STANDARD GITHUB PYTHON .gitignore ---
 
