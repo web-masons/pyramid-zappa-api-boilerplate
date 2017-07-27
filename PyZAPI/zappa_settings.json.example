@@ -1,0 +1,9 @@
+{
+    "default": {
+        "app_function": "",
+        "aws_region": "",
+        "profile_name": "",
+        "s3_bucket": "",
+        "runtime": "python3.6"
+    }
+}
