@@ -81,39 +81,40 @@ def get_single_user(request):
 # Create / Insert a User
 @view_config(route_name='create_new_user', request_method='POST', renderer='json')
 def create_user(request):
-    data = request.json_body
-    schema = UserSchema()
-    json_dict = schema.load(data).data
-    enteredFirstName = json_dict["first_name"]
-    enteredLastName = json_dict["last_name"]
-    createdAt = json_dict["created_at"] if json_dict.get("created_at") else datetime.now()
-    user = User(first_name=enteredFirstName, last_name=enteredLastName, created_at=createdAt)
+    newFirstName = request.matchdict.get('first_name')
+    newLastName = request.matchdict.get('last_name')
+    createdAt = datetime.now()
+    user = User(first_name=newFirstName, last_name=newLastName, created_at=createdAt)
     with transaction.manager:
         DBSession.add(user)
         # Flush to get the post.id from the database
         DBSession.flush()
-        return "User Created Successfully"
+        return HTTPOk()
 
 
 # Update User
 @view_config(route_name='update_user', request_method='PUT', renderer='json')
 def update_user(request):
+    # ID
     user_id = request.matchdict.get('user_id')
-    data = request.json_body  # request.POST
-    schema = UserSchema()
-    json_dict = schema.load(data).data
-    # Get Current Record in Database
     current_user_from_db = DBSession().query(User).filter_by(id=user_id).first()
     # First Name
-    new_first_name = json_dict["first_name"] if json_dict.get("first_name") else current_user_from_db.first_name
+    if request.matchdict.get('first_name') :
+        new_first_name = request.matchdict.get('first_name')
+    else :
+        new_first_name = current_user_from_db.first_name
     # Last Name
-    new_last_name = json_dict["last_name"] if json_dict.get("last_name") else current_user_from_db.last_name
+    if request.matchdict.get('last_name') :
+        new_last_name = request.matchdict.get('last_name')
+    else :
+        new_last_name = current_user_from_db.last_name
+
     # Created At
-    createdAt = json_dict["created_at"] if json_dict.get("created_at") else current_user_from_db.created_at
+    createdAt = current_user_from_db.created_at
 
     with transaction.manager:
         DBSession.query(User).filter_by(id=user_id).update({"first_name": new_first_name, "last_name": new_last_name, "created_at": createdAt})
-        return "User Updated Successfully"
+        return HTTPOk()
 
 
 # DELETE user

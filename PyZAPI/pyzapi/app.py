@@ -23,6 +23,7 @@ def main(global_config, **settings):
     config.add_renderer('json', custom_json_renderer())
     config.add_renderer('json2', custom_json_renderer2())
 
+    config.include('pyramid_jinja2')
     config.include('.models')
     config.include('.routes')
 
