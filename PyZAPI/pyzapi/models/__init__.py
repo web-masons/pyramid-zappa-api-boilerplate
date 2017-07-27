@@ -3,9 +3,11 @@ from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm import configure_mappers
 import zope.sqlalchemy
 
-# import or define all models here to ensure they are attached to the
-# Base.metadata prior to any initialization routines
-from .mymodel import MyModel  # noqa
+# import or define all models here
+from .usermodel import User
+from .usermodel import UserSchema
+from .meta import Base
+from .meta import DBSession
 
 # run configure_mappers after defining all of the models to ensure
 # all relationships can be setup
