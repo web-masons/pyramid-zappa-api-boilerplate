@@ -1,32 +1,27 @@
-
 ---
-
     - name: Check NTP service to make sure its running
       service: name=ntp state=started enabled=yes
-      become: yes
 
     - name: Add Felix Krull's Python PPA
       apt_repository:
-        repo: 'ppa:fkrull/deadsnakes'
-        state: present
+       repo: 'ppa:fkrull/deadsnakes'
+       state: present
 
     - name: Update apt cache
       apt: update-cache=yes cache_valid_time=86400
-      become: yes
-      become_method: sudo
 
     - name: Install Python 3.6
       apt:
-        name: python3.6
-        state: latest
+       name: python3.6
+       state: latest
 
     - name: install python-pip
-      apt: name=python-pip
-      become: yes
+      apt: 
+       name: python3-pip
 
-    - name: install python-virtualenv
-      apt: name=python-virtualenv
-      become: yes
+    - name: Install python-virtualenv
+      apt:
+       name: python-virtualenv
 
     - name: Install PIP requirements
       pip:
